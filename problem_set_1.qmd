@@ -38,19 +38,55 @@ The `nes` data set in the `polsciols` R package provides you with a selection of
 
 ## Question 1
 
-Prior to the 2020 US Presidential Election, the ANES asked respondents their highest level of school completed or highest degree received.  
+Prior to the 2020 US Presidential Election, the ANES asked respondents their highest level of school completed or highest degree received.
 
 ### Part A
 
 *Points: 2*
 
+::: callout-note
+2/2
+:::
+
 What was the most common highest level of education obtained by respondents? What was the least common? *Use the `education` variable from the `nes` data set to answer these questions.*
+
+```{r}
+library(tidyverse)
+library(polisciols)
+library(wbstats)
+library(janitor)
+library(skimr)
+library(countrycode)
+library(scales)
+```
+
+```{r}
+skim(nes$education)
+```
+
+**The most common highest level of education is a bachelor's degree and the least common is a high school degree.**
 
 ### Part B
 
 *Points: 2*
 
+::: callout-note
+2/2
+:::
+
 Describe the distribution of the total number of respondents that obtained each highest level of education. Include a plot of those counts.
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(nes, aes(y = education)) + 
+  geom_bar() +
+  theme_minimal()
+```
+
+**If you exclude the people who did not answer then the distribution for the total number of respondents is normal.**
 
 ## Question 2
 
@@ -60,13 +96,39 @@ The ANES also asked each respondent how often they pay attention to what is goin
 
 *Points: 2*
 
+::: callout-note
+0.5/2
+:::
+
 How often did individuals pay attention to what was going on in government and politics? What was the most popular level of attention? What was the least? *Use the `attention_to_politics` variable from the `nes` data set to answer these questions.*
+
+```{r}
+tabyl(nes,attention_to_politics)
+```
+
+**The most popular level of attention 1,942 and the least level is 77.**
+
+::: callout-note
+Not quite and what are these answers? The most popular is "Most of the time" (3313) and the least popular is "Never".
+:::
 
 ### Part B
 
 *Points: 3*
 
+::: callout-note
+3/3
+:::
+
 Describe the distribution of the total number of respondents who provided each answer to this question. Does this distribution indicate that individuals tend to pay very little, a moderate, or a lot of attention to politics prior to a US Presidential Election? Include a plot of these counts in your answer.
+
+```{r}
+ggplot(nes, aes(x = attention_to_politics)) + 
+  geom_bar() +
+  theme_minimal()
+```
+
+**The distribution of this plot is skewed to the right. This indicates that individuals tend to pay more attention to politics.**
 
 ## Question 3
 
@@ -85,32 +147,109 @@ iq <- c(
 
 *Points: 3*
 
+::: callout-note
+2.5/3
+:::
+
 Find the five-number summary, mean, and standard deviation for these data. Do you think any of these students might be outliers in this distribution? If so, what IQ test score did they get and how do you know?
+
+```{r}
+summary(iq)
+mean(iq)
+sd(iq)
+iq.df <- data.frame(iq)
+ggplot(iq.df, aes(x= "", y= iq)) +
+ geom_boxplot(fill = "black") +
+ labs(title= "IQ Boxplot", y= "Student Scores") +
+ theme_minimal()
+```
+
+**Minimum: 81**
+
+**(Q1): 104.5**
+
+**Median: 114.0**
+
+**(Q3): 125.25**
+
+**Maximum: 145.**
+
+**The mean IQ score is 114.9. The standard deviation is 14.68. There are no outliers.**
+
+::: callout-note
+You are correct, but needed to explain how you came to conclude that there are no outliers.
+:::
 
 ### Part B
 
 *Points: 3*
 
+::: callout-note
+3/3
+:::
+
 In large populations, IQ test scores are standardized to have a mean of 100 and a standard deviation of 15. In what way does the distribution among these students differ from the overall population? Do not use the words and phrases "mean" or "standard deviation" in your answer.
+
+```{r}
+
+mean <- mean(iq)
+sd <- sd(iq)
+standard <- (iq-mean)/sd * 15 + 100
+barplot(iq, main = "IQ Scores", xlab = "Student Scores", ylab= "mean")
+```
+
+**When compared to the overall population, the students had a higher distribution of IQ values. This suggests that the tested group of kids generally had higher IQ test scores. Compared to a larger population, the variation in scores are a little bit smaller, indicating that the scores in this group are more closely distributed around their central values.**
 
 ## Question 4
 
 *Points: 4*
 
+::: callout-note
+4/4
+:::
+
 The ANES collects information about each respondent's demographics, including their race, age, household income, and party affiliation. Provide the "type" (categorical or continuous) of variable each of those demographic characteristics represents.
+
+**From the information provided examples of categorical variables are race and party affiliation. Continuous variables include household income, and age.**
 
 ## Question 5
 
-The ANES also asked respondents prior to the election to rate Joe Biden and Donald Trump on a scale from 0 to 100. 
+The ANES also asked respondents prior to the election to rate Joe Biden and Donald Trump on a scale from 0 to 100.
 
 ### Part A
 
 *Points: 3*
 
+::: callout-note
+3/3
+:::
+
 Plot all respondents' answers to these two questions on a single density plot. There are several peaks in these distributions. What do these peaks have in common? What might they suggest about how people answer questions that ask them to provide a single number along a large range?
+
+```{r}
+ggplot(nes) +
+ geom_density(aes(x=therm_biden), fill = "blue", alpha = 0.4) +
+ geom_density(aes(x=therm_trump), fill = "red", alpha = 0.4)+
+ labs(
+    x= "Feelings about Biden & Trump", 
+   y= "Density"
+ )
+```
+
+**The peaks in the data suggest that more people have negative feelings towards both Biden & Trump. There are some tiny peaks around the 50's, for that I would assume respondents** **rounded up. I would argue that, that those responses could be seen as indifferent to both. All of the peaks are the same for both Biden & Trump, I believe that suggest that there is an equal dislike for both. This suggests that when asked on a scale from 0-100 respondents are more likely to chose 1, 50, or 100.**
 
 ### Part B
 
 *Points: 3*
 
+::: callout-note
+2/3
+:::
+
 President Biden won this election. Would you predict this outcome from the way this representative sample responded to these questions? Provide a brief description of the reasoning behind your answer.
+
+**I would predict that Biden would win. I would predict this because while there is a peak for both at zero rating, the peak for Trump is higher than Biden's.**
+
+::: callout-note
+This is correct, but how does that translate into a win for Biden? How do people with more moderate views play into this?
+:::
