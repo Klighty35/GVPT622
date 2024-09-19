@@ -1,0 +1,195 @@
+---
+title: "Problem Set 2"
+subtitle: "Due date: 18 September"
+format: 
+  html:
+    self-contained: true
+toc: true
+editor: visual
+execute: 
+  echo: true
+  warning: false
+---
+
+**Kennedy Lighty**
+
+```{r}
+library(tidyverse)
+library(skimr)
+```
+
+Please upload your completed assignment to the ELMs course site (under the assignments menu) and to your class Github repository. You need to upload both your Quarto document (with R code, as needed) and its rendered output (either as a PDF or HTML file).
+
+**Total points: 25**
+
+## Question 1
+
+*Points: 10*
+
+::: callout-note
+6/10
+:::
+
+Suppose I want to examine the hypothesis that consuming political news coverage from cable network channels (e.g., CNN, MSNBC, Fox News, etc.) causes citizens to have less trust in government than if they were to consume it from mainstream print media (e.g., New York Times, Wall Street Journal, etc.). What is more, suppose that I believe that this effect is greatest among "young" citizens. Design the contours of an experiment to test this proposition (and be sure to sketch the key elements of the experimental design). Second, briefly describe any significant shortcomings that the experimental design might have.
+
+**In order to test a hypothesis stating that "Young Americans are more affected by cable network news consumption on their level of faith in the government." I think it would be best to select a random 10 young American's from each state and have them consume media from both outlets being news channels and mainstream print media.**
+
+::: callout-note
+This is a very small sample! Only 500 people, and you suggest that which state they are in might matter (hence wanting to balance your sample by state).
+:::
+
+::: callout-note
+Also, you should look at the effect across age groups. The prompt suggests that the effect would be greatest among young citizens. To test this, you need citizens from other age groups to compare them to.
+:::
+
+**Random assignment will be used to place subjects in the Print Media or Cable News section. Subjects will be further randomized to certain networks or publications within each condition.**
+
+::: callout-note
+You'll have some very small groups. You are dividing 500 people up in to two groups - print media or cable news. You then divide those groups of 250 into even smaller groups. You will then be making general statements about the behavior of only a couple of 10s of people.
+:::
+
+::: callout-note
+You're also missing a control group. You need a group of people who are not treated. They will just consume political news as they otherwise would. You can then compare the effect of cable news consumption or print media consumption to this control group.
+:::
+
+**The subjects should take a pre & post test surveying their trust within the government. To complete the experiment & find the findings, it will be important to compare the shifts in the print and cable news media sector's levels of faith in the government.** **Some limitations of this study could include the time restraint. The argument could be made that 30 minutes is not enough time to fully capture the effects.**
+
+## Question 2
+
+*Points: 10*
+
+::: callout-note
+2/10
+:::
+
+Below are four hypothetical research designs to determine the effects of democratic governance on the funding of educational institutions. Briefly evaluate each sampling design in terms of its: (1) sampling variability; and, (2) sources of potential bias.
+
+A.  A sample of educational funding levels for every country in Europe for each of the last 100 years.
+
+    **All countries in Europe are in included in this sample set which increases the sample size, making the variability low.**
+
+    ::: callout-note
+    Partially correct. There is no variance.
+    :::
+
+    **The potential bias is low. This sample includes a broad range of time & all the countries in Europe.**
+
+    ::: callout-note
+    Incorrect. Our population is all countries.
+    :::
+
+B.  A sample of educational funding levels in five randomly picked countries drawn from the global population of countries for each of the last 10 years.
+
+    **The sample may contain nations with radically diverse economic and governmental systems due to the random selection process, which would increase variability.**
+
+    ::: callout-note
+    Incorrect. Variability will be high because we are selecting such a small proportion of our population.
+    :::
+
+    **Given the short 10-year duration, long-term trends in educational spending and governance may have been overlooked.**
+
+    ::: callout-note
+    Incorrect. There will be no bias because of random sampling. Our research question is not focused on long-term trends.
+    :::
+
+C.  A survey of educational administrators that yields responses that allow for a comparison of educational funding levels in Russia and the United States for the six-year period from 2010 to 2015.
+
+    **The sample variability is low because the comparison is restricted to just two nations.**
+
+    ::: callout-note
+    Incorrect. It would be low if they managed to get responses from a large proportion of administrators.
+    :::
+
+    **Administrators may respond with information that supports institutional or political agendas rather than impartial analysis.**
+
+    ::: callout-note
+    Partially correct. Restricting our sampling pool to the US and Russia does not allow us to speak more generally about democracies and non-democracies.
+    :::
+
+D.  A sample of 75 randomly selected countries' educational funding levels for each of the past 25 years.
+
+    **With a random selection of 75 countries, this would result in moderate variability.**
+
+    ::: callout-note
+    Partially correct. Yes, but why? Because it is a large proportion of our population.
+    :::
+
+    **With 75 countries being a good number of countries the randomization could lead to a unrepresentative sample. Depending on the makeup of the sample, nations with varying degrees of economic development and cultural perspectives on education may skew the results causing potential bias**
+
+    ::: callout-note
+    Incorrect. The random sampling accounts for this.
+    :::
+
+## Question 3
+
+*Points: 5*
+
+::: callout-note
+5/5
+:::
+
+The COVID-19 pandemic wreaked havoc on the global economy. People became sick or died, supply chains snapped, and we all sheltered behind strict national borders or in our homes. We can see the effect of these changes when we look at how the growth of countries' Gross Domestic Product (GDP) changed between 2019 and the global pandemic's start in 2020.
+
+::: callout-note
+GDP is a popular measure of a country's annual economic output. Its annual growth tends to be approximately Normally distributed.
+:::
+
+```{r}
+library(tidyverse)
+library(wbstats)
+
+gdp_growth_df <- wb_data("NY.GDP.MKTP.KD.ZG", 
+                         start_date = 2019, 
+                         end_date = 2020, 
+                         return_wide = F)
+
+ggplot(gdp_growth_df, aes(x = value, fill = factor(date))) + 
+  geom_density(alpha = 0.75) + 
+  theme_minimal() + 
+  theme(plot.title = element_text(face = "bold"),
+        plot.title.position = "plot") + 
+  labs(title = "Countries' annual percentage growth rate of GDP in 2019 and 2020",
+       x = "Annual growth in GDP (%)",
+       y = "Density",
+       fill = "Year",
+       caption = "Source: World Bank")
+```
+
+### Part A
+
+*Points: 2*
+
+Describe the distribution of all countries' annual GDP growth rates in 2019 (found in the `gdp_growth_df` dataframe). Do the same for 2020. Include in those descriptions their five-number summaries
+
+```{r}
+library(skimr)
+year_2019 <- gdp_growth_df |>
+  filter(date !=2020)
+year_2020 <- gdp_growth_df |> 
+  filter(date !=2019)
+
+skim(year_2019)
+skim(year_2020)
+```
+
+**The distribution for both are relatively normal.**
+
+**2019: -11.321,, 1.14, 2.7, 4.76, and 23.41**
+
+**2020: -58.32,-8.28, -3.37, -1.1, and 43.38**
+
+*Points: 2*
+
+Calculate the mean and standard deviation of all countries' annual GDP growth rates in 2019. Do the same for 2020.
+
+**2019: Mean- 2.89, SD- 3.45**
+
+**2020: Mean- -5.35, SD 9.15**
+
+### Part C
+
+*Points: 1*
+
+Compare the mean and standard deviation of GDP growth rates in 2019 with those in 2020. What, generally, happened to each country's economy? Do not use the words or phrases "mean" or "standard deviation" in your answer.
+
+**In comparison to 2019, the average GDP growth rate decreased by almost 8% in 2020. There was greater variance among the countries in 2020 as the GDP growth rate distribution was around three times more dispersed than it was in 2019 around GDP growth rates for 2020.**
