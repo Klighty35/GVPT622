@@ -14,6 +14,20 @@ Please upload your completed assignment to the ELMs course site (under the assig
 
 **Total points: 30**
 
+**Kennedy Lighty**
+
+```{r}
+library(tidyverse)
+library(wbstats)
+library(poliscidata)
+library(countrycode)
+library(broom)
+library(janitor)
+library(ggridges)
+library(modelsummary)
+library(dplyr)
+```
+
 ```{r}
 dem_wealth_df <- readr::read_csv("http://svmiller.com/extdata/democracy-income-1950.csv") |> 
   dplyr::transmute(iso3c, country, gdp_per_cap = wbgdp2011est / wbpopest, democracy_score = xm_qudsest)
@@ -29,17 +43,39 @@ The `dem_wealth_df` data set (taken from the wonderful Dr Steven V Miller's [blo
 
 > Using the `dem_wealth_df` data frame loaded in above, produce a scatter plot of the variables `democracy_score` and `gdp_per_cap` (with `gdp_per_cap` as the dependent variable on the y-axis). Professionally format your graph.
 
+```{r}
+ggplot(data = dem_wealth_df, aes(x = democracy_score, y = gdp_per_cap)) +
+    geom_point(color = "blue", size = 3, alpha = 0.6) +  
+    labs(title = "Relationship Between Democracy Score and GDP Per Capita", 
+         x = "Democracy Score", 
+         y = "GDP Per Capita") +  
+    theme_minimal(base_size = 15) +  
+    theme(
+        plot.title = element_text(hjust = 0.5, face = "bold"), 
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold")
+    )
+```
+
 ### Part B
 
 *Points: 3*
 
 > Describe the scatter plot. Note suspected outliers if any exist (a visual inspection will suffice for this question).
 
+**The scatter plot shows a positive relationship between the X axis and the Y axis. This positive relationship suggest that as the democracy score increases so does the GDP per capita. There are also many clusters in the data, these clusters indicate that countries share similar levels of democracy and GDP per capita.**
+
 ## Question 2
+
+Calculate the correlation coefficient between democracy_score and gdp_per_cap. What does it tell you about the relationship between a country's level of democracy and its citizens' wealth?
 
 *Points: 2*
 
-> Calculate the correlation coefficient between `democracy_score` and `gdp_per_cap`. What does it tell you about the relationship between a country's level of democracy and its citizens' wealth?
+```{r}
+ correlation <- cor(dem_wealth_df$democracy_score, dem_wealth_df$gdp_per_cap, use = "complete.obs")
+```
+
+**The correlation coefficient demonstrates a strong positive association. This suggests that a greater GDP per capita may be correlated with higher democracy scores.**
 
 ## Question 3
 
@@ -51,11 +87,28 @@ I would like to know whether individuals with higher levels of education tend to
 
 > Using the `nes` data set in the `polisciols` R package, construct a cross-tab of the relationship between `attention_to_politics` and `education`. Focus only on those respondents who provided answers (filter out "Refused", "Don't know", and missing responses).
 
+```{r}
+data("nes", package = "polisciols")
+ nes_filtered <- nes |>
+     filter(attention_to_politics != "Refused", 
+            attention_to_politics != "Don't know", 
+            !is.na(attention_to_politics),
+            education != "Refused",
+            education != "Don't know",
+            !is.na(education))
+
+cross_tab <- table(nes_filtered$attention_to_politics, nes_filtered$education)
+
+cross_tab_df <- as.data.frame(cross_tab)
+```
+
 ### Part B
 
 *Points: 3*
 
 > Describe the relationship between these two variables (if one exists).
+
+**From looking at the data, the indication could be that those with a higher level of education are more likely to vote than those with a lower level of education or little to no educational background at all.**
 
 ## Question 4
 
@@ -64,6 +117,8 @@ I would like to know whether individuals with higher levels of education tend to
 I hypothesize that US voters who identify as being religious are less likely to support Federal government funding of scientific research. To test this, I run a survey of a representative sample of the US voting population. I ask respondents to indicate how often they attend religious ceremonies as a proxy measure of how strongly they identify as religious. They can answer: never, only for significant events, or regularly. Next, I ask respondents whether they think the Federal government's funding of scientific research is "too little", "about right", or "too much".
 
 > Describe how you would construct a cross-tab to evaluate my hypothesis. Which responses (religious identification or support for Federal funding) would you compare within? Relatedly, which would you vary? Finally, what statistics would you use to make your comparisons?
+
+**I would create a cross-tab comparing religious identification (independent variable) with support for Federal funding of scientific research (dependent variable). Doing it this way will allow me to examine the opinions on federal funding across different levels of religious identification. Looking at each identification group I can compare how respondents differ in their support for government spending. Ex: ​​ “Do those who attend religious ceremonies regularly show higher proportions of thinking funding is "too much" compared to those who never attend?” I would vary the level of identification because I am testing how different levels of religious identity can impact attitudes toward government spending.**
 
 ## Question 5
 
@@ -75,14 +130,39 @@ Let's return to our original question of the relationship between democracy and 
 
 > Create two new variables based on a country's level of democracy, and its citizens' wealth. For the democracy variable, split countries into three categories: `autocracy` if they score in the lowest third of democracy scores, `hybrid` if they score in the middle third, and `democracy` if they score in the highest third. Similarly, for the wealth variable, split countries into three categories: `low income` if they score in the lowest third of GDP per capita, `middle income` if they score in the middle third, and `high income` if they score in the highest third.
 
+```{r}
+dem_wealth_df <- dem_wealth_df |> 
+  mutate(
+    democracy_category = case_when(
+      democracy_score <= quantile(democracy_score, 1/3) ~ "autocracy", 
+      democracy_score > quantile(democracy_score, 1/3) & democracy_score <= quantile(democracy_score, 2/3) ~  "hybrid", 
+      democracy_score > quantile(democracy_score, 2/3) ~ "democracy"
+    ), 
+    wealth_category = case_when(
+      gdp_per_cap <= quantile(gdp_per_cap, 1/3) ~ "low income", 
+      gdp_per_cap > quantile(gdp_per_cap, 1/3) & gdp_per_cap <= quantile(gdp_per_cap, 2/3) ~ "Middle income", 
+      gdp_per_cap > quantile(gdp_per_cap, 2/3) ~ "High income"
+    )
+  )
+```
+
 ### Part B
 
 *Points: 3*
 
 > Create a cross-tab.
 
+```{r}
+datasummary_crosstab(
+  democracy_category ~ wealth_category, 
+  data = dem_wealth_df
+)
+```
+
 ### Part C
 
 *Points: 5*
 
 > Describe the relationship between these variables.
+
+**Autocratic nations typically fall into both the lower and middle economic ranges. This implies a variety of economic circumstances under autocratic governments. Most democracies fall into one of two income categories: middle-class or upper-class. With countries represented in low, middle, and high income groups, hybrid regimes are more evenly spread across the income range. This is a reflection of the diverse political characteristics and economic standing of governments.**
