@@ -1,0 +1,93 @@
+---
+title: "Problem Set 4"
+subtitle: "Due date: 9 October"
+format: 
+  html:
+    self-contained: true
+toc: true
+editor: visual
+execute: 
+  echo: true
+---
+
+**Kennedy Lighty**
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+Please upload your completed assignment to the ELMs course site (under the assignments menu) and to your class Github repository. You need to upload both your Quarto document (with R code, as needed) and its rendered output (either as a PDF or HTML file).
+
+**Total points: 30**
+
+## Question 1
+
+*Points: 5*
+
+Suppose I am playing poker with a regular deck of 52 cards. I have three cards in my hand, one of which is a king. What is the probability that the next two cards I draw will both be kings?
+
+```{r}
+3/49 * 2/48
+```
+
+**The probability that the next two cards will both be kings is 0.0025 or 1/392.**
+
+## Question 2
+
+*Points: 5*
+
+A survey of 1,500 randomly selected individuals reveals that 46% of them have a college degree and that 31% of them have a gun in their house. If you were to assume that college graduation and gun ownership are independent of one another, what is the probability that an individual is both a college graduate and does not have a gun in their house?
+
+```{r}
+.46 * .69
+```
+
+**The probability that an individual is a college student and does have a own in their house is 31.74%**
+
+## Question 3
+
+*Points: 5*
+
+I roll a fair six-sided dice and I get a number greater than three. What is the probability that the next two dice rolls will also generate numbers greater than three?
+
+```{r}
+3/6 * 3/6
+```
+
+**The probability that the dice rolls will generate a number greater than three is 1/4.**
+
+## Question 4
+
+*Points: 10*
+
+Assume that in the United States, 15% of people are smokers and, of smokers, 60% smoke at least one pack a day. Among those who smoke at least a pack a day, 60% will develop lung cancer at some point in their lives while, in the rest of the p opulation (which includes smokers who smoke less than a pack a day and non-smokers), only 10% will. What is the probability that a person who develops lung cancer was a smoker who smoked at least a pack a day?
+
+```{r}
+.60 * .15 #smoker + 1 pack 
+.60 * .15 #smoker + < 1 pack
+
+.60 * .09 + .10 * .06 + .10 * .85 #overall chance of cancer 
+
+.60 * .09 
+
+.054/.145
+```
+
+**The probability of a person being diagnosed with lung cancer after smoking at least one pack of cigarettes everyday is 37%**
+
+## Question 5
+
+*Points: 5*
+
+Assume that in the world, 60% of countries are democracies and 80% of countries have ratified the Rome Statute for the International Criminal Court. Assume further that 90% of democracies have ratified the Rome Accords. What is the probability that a country is either a democracy or has ratified the Rome Accords?
+
+```{r}
+.60 * .90 
+
+.60 + .80 
+
+1.4 - .54
+```
+
+**The probability that a country is a democracy or they have ratified the Rome Accords is 86%**
