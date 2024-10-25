@@ -37,11 +37,19 @@ I hypothesize that the mean mathematics SAT score for University of Maryland stu
 
 ### Part A
 
+::: callout-note
+2/2
+:::
+
 Based on my sample, what is a point estimate for the mean mathematics SAT score for University of Maryland students?
 
 **Based on the sample the estimate score is 610.**
 
 ### Part B
+
+::: callout-note
+2/2
+:::
 
 What is a 95% confidence interval around that estimate?
 
@@ -49,21 +57,45 @@ What is a 95% confidence interval around that estimate?
 
 ### Part C
 
+::: callout-note
+2/2
+:::
+
 What is the null hypothesis?
 
 **The null hypothesis is 600.**
 
 ### Part D
 
+::: callout-note
+0/2
+:::
+
 What is the two-tailed p-value and what does it mean?
 
 **The two tailed value is 0.86. This means that the probability of observing a sample mean is more than likely between 610 and 600.**
 
+::: callout-note
+p-value: 0.0009
+
+It means that there is a vanishingly small chance (\<0.001%) that I would observe a value that was either 10 points higher or lower than a mean mathematics SAT score for University of Maryland students of 600.
+
+Please show your working (for the p-value). I can't give you points if I don't know what you did.
+:::
+
 ### Part E
+
+::: callout-note
+0.5/2
+:::
 
 Do the data support my hypothesis? Why, or why not?
 
 **Yes, the data does support my hypothesis. There is considerable statistical support for the hypothesis that University of Maryland students actual mean SAT score in mathematics is lower than 600.**
+
+::: callout-note
+Correct, but I don't know how you got there. A p-value of 0.86 would not show support for the hypothesis.
+:::
 
 ## Question 2
 
@@ -73,25 +105,53 @@ I take an SRS of 900 citizens in a public opinion survey and find that the mean 
 
 ### Part A
 
+::: callout-note
+0/2
+:::
+
 What is the null hypothesis?
 
 **The null hypothesis is less than 50.**
 
+::: callout-note
+Null hypothesis is 50. It is always a single number (not a range).
+:::
+
 ### Part B
+
+::: callout-note
+2/4
+:::
 
 What is a 95% confidence interval around the sample statistic? Does this interval indicate support for a two-tailed test of my hypothesis (`p < 0.05` as the threshold)? Why, or why not?
 
 **The 95% confidence interval is 49.87% and 53.13%. This does not indicate strong support of the hypothesis because it is less than 50.**
 
+::: callout-note
+... because it includes the null hypothesis of 50.
+:::
+
 ### Part C
+
+::: callout-note
+3.5/4
+:::
 
 What is a 90% confidence interval around the sample statistic? Does this interval indicate support for a one-tailed test of my hypothesis (`p < 0.05` as the threshold)? Why, or why not?
 
 **The 90% confidence interval is 50.13% and 52.87%. This does indicate a strong support of the hypothesis because it is above 50.**
 
+::: callout-note
+... because it does not include the null hypothesis of 50.
+:::
+
 ## Question 3
 
 *Points: 5*
+
+::: callout-note
+5/5
+:::
 
 Suppose I conduct a difference of means test and obtain a t-statistic of 2.50. What does this indicate about the statistical significance of the sample mean compared to the null hypothesis?
 
@@ -105,11 +165,19 @@ I hypothesize that fewer than 40% of registered voters approve of President Bide
 
 ### Part A
 
+::: callout-note
+1/1
+:::
+
 Based on my sample, what is a point estimate for the proportion of the population that approves of President Biden?
 
 **The point estimate is 37.9%.**
 
 ### Part B
+
+::: callout-note
+1/1
+:::
 
 What is a 90% confidence interval around that estimate?
 
@@ -117,17 +185,37 @@ What is a 90% confidence interval around that estimate?
 
 ### Part C
 
+::: callout-note
+0/1
+:::
+
 What is the null hypothesis?
 
 **The null hypothesis is more than 40%**
 
+::: callout-note
+Is equal to 40%.
+:::
+
 ### Part D
+
+::: callout-note
+0.5/1
+:::
 
 What is the one-tailed p-value and what does it mean?
 
 **The one-tailed p value is 0.12. This means the data does not support the null hypothesis.**
 
+::: callout-note
+This means that there is a 12% chance that we would observe this sample proportion or smaller if the null hypothesis were true.
+:::
+
 ### Part E
+
+::: callout-note
+1/1
+:::
 
 Do the data support my hypothesis? Why, or why not?
 
@@ -136,6 +224,10 @@ Do the data support my hypothesis? Why, or why not?
 ## Question 5
 
 *Points: 5*
+
+::: callout-note
+0/5
+:::
 
 ```{r}
 
