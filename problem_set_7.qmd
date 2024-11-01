@@ -37,6 +37,10 @@ I hypothesize that the older someone is, the more they like watching golf. I con
 
 *Points: 4*
 
+::: callout-note
+4/4
+:::
+
 Make a cross-tab, by hand, of the relationship between these two variables based on the following (completely made up) data. Make sure that you present both raw counts and the appropriate percentages to examine the relationship.
 
 ```{r}
@@ -75,13 +79,25 @@ cross_tab
 
 *Points: 2*
 
+::: callout-note
+1.5/2
+:::
+
 Do the data support my hypothesis? Be sure to explain the nature of the relationship (or lack thereof, if relevant).
+
+::: callout-note
+The relationship is not as linear as you are suggesting.
+:::
 
 **Yes, the data does support the hypothesis. As age increases, there is a clear trend toward higher enjoyment of watching golf. Compared to younger age groups, older adults especially those in the 51–65 and 66+ age groups show a greater predilection for watching golf.**
 
 ### Part C
 
 *Points: 2*
+
+::: callout-note
+2/2
+:::
 
 Compute (by hand) the chi-square statistic to test the null hypothesis of no relationship between these two variables. Be sure to show your work.
 
@@ -110,6 +126,10 @@ chi_square_statistic
 
 *Points: 2*
 
+::: callout-note
+2/2
+:::
+
 Using the chi-square statistic that you computed in question 1(c), can you reject the null hypothesis of no relationship between these two variables with 95% confidence? Why, or why not?'
 
 ```{r}
@@ -130,9 +150,17 @@ Question 2
 
 *Points: 10*
 
+::: callout-note
+6/10
+:::
+
 I hypothesize that people with higher levels of education tend to be more likely to pay higher levels of attention to politics. Use the `nes` dataset from the `poliscidols` package to test my hypothesis. Create a cross-tab examining the relationship between individuals' levels of education (`education`) and the time they spend paying attention to politics (`attention_to_politics`).
 
 Do the data support my hypothesis? Be sure to explain the nature of the relationship (or lack thereof, if relevant). Report a chi-square statistic. What does the chi-square statistic tell you about whether you can reject the null hypothesis of no relationship between these two variables with 95% confidence? Why, or why not?
+
+::: callout-note
+This is not a cross-tab. Everything else is correct.
+:::
 
 ```{r}
 
