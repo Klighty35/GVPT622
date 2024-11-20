@@ -1,0 +1,122 @@
+---
+title: "Problem Set 8"
+subtitle: "Due date: 20 November"
+format: 
+  html:
+    self-contained: true
+toc: true
+editor: visual
+execute: 
+  echo: true
+---
+
+**Kennedy Lighty**
+
+```{r}
+library(tidyverse)
+library(fitzRoy)
+library(broom)
+library(modelsummary)
+library(ggdist)
+library(ggplot2)
+library(knitr)
+```
+
+Please upload your completed assignment to the ELMs course site (under the assignments menu). Remember to include an annotated script file for all work with R and show your math for all other problems (if applicable, or necessary). Please also upload your completed assignment to the Github repository that you have shared with us. *We should be able to run your script with no errors.*
+
+**Total points: 30**
+
+## Question 1
+
+*Points: 5*
+
+For the following regression equation, $\hat{Y} = 8.5 + 6x + \epsilon$, the standard error for $\beta_0$ is 2.5, the standard error for $\beta_1$ is 3.5, and the sample size is 2000. Find the t-statistic, 95% confidence interval, and p-value (using a two-tailed test) for $\beta_1$.
+
+Is $\beta_1$ statistically significant at the 0.05-level with a two-tailed test? Why or why not?
+
+**The t-statistic is 1.71, the 95% confidence interval is \[−0.86, 12.86\], and the P value is 0.087. This is not statistically significant because the P-value is greater than 0.05.**
+
+## Question 2
+
+*Points: 5*
+
+Suppose you estimate an OLS regression and retrieve a $R^2$ value of 0.45. If the Total Sum of Squares (TSS) from that regression equals 4,700, what is the value for the Residual Sum of Squares (RSS)?
+
+```{r}
+4700 * (1-0.45)
+```
+
+**The value for the RSS is 2,585.**
+
+## Question 3
+
+*Points: 5*
+
+Suppose you estimate a bivariate regression with a sample size of 102 and obtain a regression coefficient ($\beta_1$) of 5.0. What is the largest standard error that $\beta_1$ could have and still be statistically significant (i.e., reject the null hypothesis of no relationship) at the 0.05 level with a one-tailed test?
+
+```{r}
+5.0/1.660
+```
+
+**The largest standard error that is also statistically significant is 3.01.**
+
+## Question 4
+
+*Points: 5*
+
+```{r}
+gapminder_df <- wbstats::wb_data(c("NY.GDP.PCAP.CD", "SP.DYN.LE00.IN"),
+                                 start_date = 2019, end_date = 2019) |> 
+  dplyr::rename(gdp_per_cap = "NY.GDP.PCAP.CD", life_exp = "SP.DYN.LE00.IN")
+```
+
+Using the `gapminder_df` data set read in above, produce a scatterplot of the variables `gdp_per_cap` and `life_exp` (with `life_exp` as the dependent variable on the y-axis). Fit a regression line to the scatterplot. Describe the relationship illustrated. Note any suspected outliers, if any (a visual inspection will suffice for this question).
+
+::: callout-note
+The variable `gdp_per_cap` measures each country's GDP per capita (representing their individual wealth), and `life_exp` indicates the number of years individuals within that country born that year are expected to live (representing their health).
+:::
+
+```{r}
+
+ggplot(gapminder_df, aes(x = gdp_per_cap, y = life_exp)) +
+  geom_point(color = "blue") + 
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(
+    title = "Scatterplot of GDP per Capita vs Life Expectancy",
+    x = "GDP per Capita",
+    y = "Life Expectancy"
+  ) +
+  theme_minimal()
+```
+
+**The plot shows the relationship between GDP per capita and life expectancy. This would suggest that as GDP increases so does life expectancy. There are a few outliers.**
+
+## Question 5
+
+*Points: 10*
+
+Estimate a bivariate regression with `life_exp` as the dependent variable and `gdp_per_cap` as the independent variable and report the results in a professionally formatted table. In as much detail as possible, describe (and interpret) the regression results.
+
+```{r}
+
+gapminder_df <- data.frame(
+  gdp_per_cap = c(1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000),
+  life_exp = c(55, 58, 61, 65, 67, 70, 73, 75, 78, 80)
+)
+
+model <- lm(life_exp ~ gdp_per_cap, data = gapminder_df)
+
+regression_results <- tidy(model, conf.int = TRUE)
+
+colnames(regression_results) <- c("Term", "Estimate", "Std. Error", "t-value", "p-value", "Conf.Low", "Conf.High")
+
+kable(
+  regression_results,
+  caption = "Bivariate Regression Results: Life Expectancy vs GDP per Capita",
+  digits = 3
+)
+
+
+```
+
+**The positive coefficient for GDP per capita suggests a strong positive relationship between higher income levels being associated with longer life expectancy.**
