@@ -34,6 +34,10 @@ Please upload your completed assignment to the ELMs course site (under the assig
 
 *Points: 10*
 
+::: callout-note
+10/10
+:::
+
 Table 1 below reports the results from two regression models. In Model 1 in Table 1 $Y$ is regressed on $X_1$ and, in Model 2, $Y$ is regressed on both $X_1$ and $X_2$. Why might $X_1$ be statistically significant at conventional levels in Model 1 but statistically insignificant in Model 2? Be as specific as possible.
 
 **There is a difference in the model due to omitted variable bias. The coefficient of 𝑋1 could have been capturing both its direct influence on 𝑌 and the effect of 𝑋2, which is associated with 𝑋 1 and 𝑌, therefore X2 is omitted.** 
@@ -41,6 +45,10 @@ Table 1 below reports the results from two regression models. In Model 1 in Tabl
 ## Question 2
 
 *Points: 10*
+
+::: callout-note
+7/10
+:::
 
 Using the `censusAggregate` dataset (posted on ELMs), which is survey data aggregated to the state level (1972-2000), estimate a regression with `vote` as the dependent variable and the following independent variables: `nonSouth`, `edr`, and `pcthsg`. Report the results in a professionally formatted table and interpret the regression results.
 
@@ -58,7 +66,7 @@ Also, create a figure to display the predicted values (with confidence intervals
 
 ```{r}
 
-censusAggregate <- read.csv("censusAggregate-1.csv")
+censusAggregate <- read.csv("censusAggregate.csv")
 model <- lm(vote ~ nonSouth + edr + pcthsg, data = censusAggregate)
 
 stargazer(model, type = "text",
@@ -92,11 +100,41 @@ ggplot(new_data, aes(x = pcthsg, y = predicted)) +
   theme_minimal()
 ```
 
-**The regression indicates that there is a difference between voters in southern states versus in non-southern states. Showing that non-southern states have higher percentages of voter turnout rate. The data also shows that states with election day registration have higher percents of voter turnout as well. Voter turnout increases by 0.10 percentage points for every percentage point rise in high school graduation rates. Interpreting the constant is not meaningful because it is a baseline reference point and is not relevant to the question.**
+::: callout-note
+Don't worry about including the coded variable names in your plots or tables (for example, `nonSouth`). Your reader doesn't need to know this.
+:::
+
+**The regression indicates that there is a difference between voters in southern states versus in non-southern states. Showing that non-southern states have higher percentages of voter turnout rate.**
+
+::: callout-note
+... on average and holding all else constant. Also, please tell me by how much (5.5%).
+:::
+
+**The data also shows that states with election day registration have higher percents of voter turnout as well.**
+
+::: callout-note
+See above.
+:::
+
+**Voter turnout increases by 0.10 percentage points for every percentage point rise in high school graduation rates.**
+
+::: callout-note
+... on average and holding all else constant.
+:::
+
+**Interpreting the constant is not meaningful because it is a baseline reference point and is not relevant to the question.**
+
+::: callout-note
+Why? Because there is not and never will be a state with a 0% high school graduation rate.
+:::
 
 ## Question 3
 
 *Points: 5*
+
+::: callout-note
+5/5
+:::
 
 Using the regression results from the previous question, evaluate the null hypothesis that the effects (i.e., regression coefficients) of `nonSouth` and `pcthsg` are jointly equal to zero. Can you reject the null hypothesis? Be sure to demonstrate how you reached a definitive conclusion.
 
@@ -112,6 +150,10 @@ print(f_test)
 ## Question 4
 
 *Points: 15*
+
+::: callout-note
+10/15
+:::
 
 Using one of the other data sets available in the `poliscidata` package pick one dependent variable and two or more independent variables. Run a regression of the dependent variable on the independent variables. In your answer, describe why you picked the variables you did, produce a professionally formatted results table, and describe your statistical and substantive findings.
 
@@ -134,4 +176,20 @@ modelsummary(model,
 
 ```
 
+::: callout-note
+Your table is missing the age variables. This is because your age variable is a multiple categorical variable. It has 13 groups (based on respondents' ages). Look at what prints out when you ran `summary(model)`.
+
+We haven't covered this directly yet, but the model therefore holds one group out to act as a baseline. Here, it has held the youngest age group out as that baseline group. This baseline group gets folded into the intercept. So, the intercept is the predicted feeling rating for individuals *aged 17-20 years old* who are centerist (have a conservatism score of zero), on average.
+
+The coefficient for each other age group is the additional feeling rating with relation to that baseline age group. So, your model predicts that individuals aged 21 to 24 rate Obama 1.16 points lower than individuals aged 17-20, on average and holding all else constant.
+:::
+
 **The dependent variable I have selected is feelings toward Obama. The independent variables I have selected are voters age & level of conservatism. I thought it would be interesting to see the comparison and significance of these variables due to the discussion about youth trending to be more liberal than older individuals.** **Higher age groups are linked to higher Obama favorability, according to a positive correlation. Higher conservatism is linked to lower Obama favorability, as indicated by a negative coefficient.**
+
+::: callout-note
+Your coefficient estimates are always the average estimate for these groups. And you need to remember to say that you are holding all else constant.
+:::
+
+::: callout-note
+Missing a discussion of whether these are statistically and substantively significant.
+:::
